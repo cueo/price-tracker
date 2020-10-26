@@ -1,0 +1,79 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.cueo.pricetracker.protos";
+option java_outer_classname = "PriceTrackerProto";
+
+package io.cueo.pricetracker.protos;
+
+service User {
+  rpc AddUser (UserAddRequest) returns (UserResponse) {}
+  rpc GetUser (UserGetRequest) returns (UserResponse) {}
+}
+
+message UserGetRequest {
+  string username = 1;
+}
+
+message UserAddRequest {
+  string username = 1;
+  string name = 2;
+  string email = 3;
+}
+
+message UserResponse {
+  string username = 2;
+  string name = 3;
+  string email = 4;
+}
+
+service Item {
+  rpc AddItem (ItemAddRequest) returns (ItemResponse) {}
+  rpc GetItem (ItemGetRequest) returns (ItemResponse) {}
+  rpc GetDiscountItems (DiscountItemGetRequest) returns (DiscountItemsResponse) {}
+}
+
+message ItemGetRequest {
+  string item = 1;
+  string region = 2;
+  repeated string stores = 3;
+}
+
+message ItemAddRequest {
+  string item = 1;
+  Type type = 2;
+  repeated string stores = 3;
+}
+
+enum Type {
+  GAME = 0;
+}
+
+message ItemResponse {
+  string item = 1;
+  double price = 2;
+  Type type = 3;
+  string stores = 4;
+  string url = 5;
+  double lowestPrice = 6;
+  bool isDiscounted = 7;
+}
+
+message DiscountItemGetRequest {
+  repeated string stores = 1;
+}
+
+message DiscountItemsResponse {
+  repeated ItemResponse items = 1;
+}
+
+service Tracker {
+
+}
+
+message TrackerAddRequest {
+  string username = 1;
+  string item = 2;
+  string store = 3;
+  double targetPrice = 4;
+}
