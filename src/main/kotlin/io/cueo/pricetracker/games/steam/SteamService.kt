@@ -16,16 +16,11 @@ class SteamService : StoreService {
     private val scheme = "https"
     private val host = "store.steampowered.com"
 
-    private val searchPath = "search/results"
-    private val searchParam = "term"
-
-    private val apiPath = "/api/appdetails"
-    private val appParam = "appids"
-
     private val webClient = WebClient.create()
 
     override fun search(query: String) : List<String> {
-        val document = Jsoup.connect("$scheme://$host/$searchPath?$searchParam=$query").get()
+        val url = "$scheme://$host/search/results?term=$query"
+        val document = Jsoup.connect(url).get()
         val resultRows = document.select("#search_resultsRows")[0].select("a")
         return resultRows.map {
             it.attr("data-ds-appid")
@@ -36,8 +31,8 @@ class SteamService : StoreService {
         .uri { uriBuilder: UriBuilder ->
             uriBuilder.scheme(scheme)
                 .host(host)
-                .path(apiPath)
-                .queryParam(appParam, id)
+                .path("/api/appdetails")
+                .queryParam("appids", id)
                 .build()
         }.retrieve()
         .bodyToMono(object : ParameterizedTypeReference<Map<String, Response>>() {})

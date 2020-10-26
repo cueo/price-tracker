@@ -22,7 +22,10 @@ repositories {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("org.projectreactor:reactor-spring:1.0.1.RELEASE")
     implementation("com.google.protobuf:protobuf-java:3.12.4")
+    implementation("org.jsoup:jsoup:1.13.1")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.11.2")
